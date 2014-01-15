@@ -37,6 +37,8 @@ class SortedArray
     @internal_arr.insert(lo, el)
   end
 
+  # 'each' Method executes block on each element of the array
+  # and does not modify the original array
   def each &block
     i = 0
     while i < @internal_arr.size
@@ -46,22 +48,25 @@ class SortedArray
     return @internal_arr
   end
 
+  # 'map' Method creates and returns a new array containing elements, 
+  # with block applied to each
   def map &block
     # create a new array to return map applies block to 
     # each element, but returns that in a new array
     new_array = []
-    i = 0
-    while i < @internal_arr.size
-      # yield @internal_arr[i]    # or could have done, block.call @internal_arr[i]
-      new_array[i] = block.call(@internal_arr[i])
-      i += 1
-    end
-    return @internal_arr
+    each { |x| new_array.push yield x } if block_given?
+    return new_array
   end
 
   def map! &block
-    raise NotImplementedError.new("You need to implement the map! method!")
-  end
+    i = 0
+      while i < @internal_arr.size
+        # yield @internal_arr[i]    # or could have done, block.call @internal_arr[i]
+        @internal_arr[i] = block.call(@internal_arr[i])
+        i += 1
+      end
+      return @internal_arr 
+    end
 
   def find value
     raise NotImplementedError.new("You need to implement the find method!")
@@ -71,3 +76,9 @@ class SortedArray
     raise NotImplementedError.new("You need to implement the inject method!")
   end
 end
+
+#
+#  1. implement each_with_index
+#  2. then go back and refactor the previous methods with each_with_index
+#
+
