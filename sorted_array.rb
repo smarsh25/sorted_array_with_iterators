@@ -84,20 +84,18 @@ class SortedArray
     end
     return result
   end
-#optimized version
-# def find value
+#an optimized version
+# def find &block
 # @internal_arr.each do |x|
 #   return x if yield x
 # end
 
-
+# inject method accumulates the results of block on
+# each element in array, if acc is provided, that is starting value
   def inject acc=nil, &block
-    raise NotImplementedError.new("You need to implement the inject method!")
+    @internal_arr.each { |x| acc = yield acc, x }
+    return acc
   end
-# def 
-  # @internal_arr.each do |x|
-    # acc = yield acc, x
-# end
  
 end
 
@@ -112,8 +110,12 @@ end
 # end
 
 
-# arr = SortedArray.new([2,3,4,7,9])
-# print_array(arr)
+# arr = SortedArray.new([1,2,3])
+# # print_array(arr)
+# puts "sorted_array_inject: #{arr.inject(1) {|sum, n| sum + n}}"
+
+# arr2 = [1,2,3]
+# puts "real inject: #{arr2.inject(1) {|sum, n| sum + n}}"
 # arr2 = arr.map {|x| x * 2}
 # print_array(arr)
 # print_array(arr2)
