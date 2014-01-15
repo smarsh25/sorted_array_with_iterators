@@ -84,8 +84,12 @@ describe SortedArray do
   describe :inject do
     it_should_behave_like "yield to all elements in sorted array", :inject
 
-    it "does not currently have any examples for it" do
-      pending "define some examples by looking up http://www.ruby-doc.org/core-2.1.0/Enumerable.html#method-i-inject"
+    it "sorted_array_inject == enums inject with a starting value" do
+          sorted_array.inject(1) {|sum, n| sum + n}.should == source.inject(1) {|sum, n| sum + n}
+    end
+
+    it "sorted_array_inject == enums inject with NO starting value" do
+          sorted_array.inject {|sum, n| sum + n}.should == source.inject {|sum, n| sum + n}
     end
   end
 end
