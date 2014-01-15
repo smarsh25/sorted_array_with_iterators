@@ -42,13 +42,16 @@ describe SortedArray do
     describe "that update the original array" do
       describe :map! do
         it 'the original array should be updated' do
-          pending "fill this spec in with a meaningful example"
+          # original_array = sorted_array.internal_arr
+          # expect { sorted_array.map {|el| el } }.to change { original_array }
+          sorted_array.map! {|ele| ele * 2}.should_not == [2,3,4,7,9]
+    
         end
 
         it_should_behave_like "yield to all elements in sorted array", :map!
 
         it 'should replace value of each element with the value returned by block' do
-          pending "this is just the same as the example above"
+          sorted_array.map! {|ele| ele * 2}.should == [4,6,8,14,18]
         end
       end
     end
@@ -57,15 +60,13 @@ describe SortedArray do
   describe :find do
     it_should_behave_like "yield to all elements in sorted array", :find
 
-    it "does not currently have any examples for it" do
-      pending "define some examples by looking up http://www.ruby-doc.org/core-2.1.0/Enumerable.html#method-i-find"
+    it "should find an element and return true" do
+      sorted_array.find {|ele| ele == 7}.should == 7
+    end
+    it "should not find an element and return nil" do
+      sorted_array.find {|ele| ele == 1007}.should == nil
     end
   end
-  # look at "it should behave like" in map!
-  # -returns the first for which block is not false
-  # - ...
-  #
-  #
 
 
 # block_with_two_args = Proc.new ({ |acc, val| acc + val })
