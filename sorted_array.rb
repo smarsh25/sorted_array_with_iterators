@@ -58,23 +58,47 @@ class SortedArray
     return new_array
   end
 
+  # 'map!' Method applies block to each element of the array, 
+  # modifying self
   def map! &block
-    i = 0
-      while i < @internal_arr.size
-        # yield @internal_arr[i]    # or could have done, block.call @internal_arr[i]
-        @internal_arr[i] = block.call(@internal_arr[i])
-        i += 1
-      end
-      return @internal_arr 
-    end
-
-  def find value
-    raise NotImplementedError.new("You need to implement the find method!")
+    # create a new array to store results of block applied to 
+    # each element
+    new_array = []
+    each { |x| new_array.push yield x }
+    #update internal array with new elements
+    @internal_arr.replace(new_array)
+    return @internal_arr 
   end
+
+  # find the object in an array, where the block evaluates to true
+  # returns nil if not found
+  def find &block
+    # assume not found
+    result = nil
+    # iterate over each element, evaluate block
+    each do |x|
+      if yield x      # if evaluates true, break and return that object
+        result = x
+        break
+      end
+    end
+    return result
+  end
+#optimized version
+# def find value
+# @internal_arr.each do |x|
+#   return x if yield x
+# end
+
 
   def inject acc=nil, &block
     raise NotImplementedError.new("You need to implement the inject method!")
   end
+# def 
+  # @internal_arr.each do |x|
+    # acc = yield acc, x
+# end
+ 
 end
 
 #
@@ -82,3 +106,16 @@ end
 #  2. then go back and refactor the previous methods with each_with_index
 #
 
+# def print_array(arr)
+#   arr.each {|x| print "#{x} "}
+#   puts
+# end
+
+
+# arr = SortedArray.new([2,3,4,7,9])
+# print_array(arr)
+# arr2 = arr.map {|x| x * 2}
+# print_array(arr)
+# print_array(arr2)
+# arr.map! {|x| x * 2}
+# print_array(arr)
