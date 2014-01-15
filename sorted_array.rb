@@ -92,7 +92,7 @@ class SortedArray
 
 # inject method accumulates the results of block on
 # each element in array, if acc is provided, that is starting value
-  def inject acc=nil, &block
+  def inject acc=0, &block
     @internal_arr.each { |x| acc = yield acc, x }
     return acc
   end
